@@ -1,12 +1,10 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
-
-# TensorFlow and tf.keras
 import tensorflow as tf
 from tensorflow import keras
-
-# Helper libraries
 import numpy as np
 import matplotlib.pyplot as plt
+
+# https://www.tensorflow.org/beta/tutorials/keras/basic_classification
 
 print(tf.__version__)
 
@@ -34,7 +32,13 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 # model: train
-history = model.fit(train_images, train_labels, validation_data=(test_images, test_labels), epochs=10, verbose=1)
+history = model.fit(
+    train_images,
+    train_labels,
+    validation_data=(test_images, test_labels),
+    epochs=10,
+    verbose=1,
+    batch_size=None)
 
 # model: accuracy
 test_loss, test_acc = model.evaluate(test_images, test_labels)
