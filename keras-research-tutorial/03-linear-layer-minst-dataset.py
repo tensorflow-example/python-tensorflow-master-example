@@ -1,6 +1,5 @@
-from tensorflow import keras
 import tensorflow as tf
-import numpy as np
+from tensorflow import keras
 
 
 class Linear(keras.layers.Layer):
@@ -37,16 +36,13 @@ for step, (x, y) in enumerate(dataset):
 
     # Open a GradientTape.
     with tf.GradientTape() as tape:
-
         # Forward pass.
         logits = linear_layer(x)
-
         # Loss value for this batch.
         loss = loss_fn(y, logits)
 
     # Get gradients of weights wrt the loss.
     gradients = tape.gradient(loss, linear_layer.trainable_weights)
-
     # Update the weights of our linear layer.
     optimizer.apply_gradients(zip(gradients, linear_layer.trainable_weights))
 

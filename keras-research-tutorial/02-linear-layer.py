@@ -5,7 +5,7 @@ import tensorflow as tf
 class Linear(keras.layers.Layer):
     """y = w.x + b"""
 
-    def __init__(self, units=32):
+    def __init__(self, units):
         super(Linear, self).__init__()
         self.units = units
 
@@ -17,5 +17,6 @@ class Linear(keras.layers.Layer):
         return tf.matmul(inputs, self.w) + self.b
 
 
-linear_layer = Linear(4)  # Instantiate our lazy layer
-y = linear_layer(tf.ones((3, 3)))  # This will also call `build(input_shape)` then `call(inputs)`
+linear = Linear(4)  # Instantiate our lazy layer
+y = linear(tf.ones((3, 2)))  # This will also call `build(input_shape)` then `call(inputs)`
+y = linear(tf.convert_to_tensor([[1, 2, 3], [1, 2, 3], [1, 2, 3]]))
