@@ -19,7 +19,7 @@ Why = np.random.randn(vocab_size, hidden_size) * 0.01   # hidden to output
 by = np.zeros((vocab_size, 1))                          # output bias
 
 
-def one_k_representation(k, i):
+def one_hot_vector(k, i):
     x = np.zeros(shape=(k, 1))
     x[i] = 1
     return x
@@ -38,7 +38,7 @@ def loss_fun(inputs, targets, hprev):
 
     # forward pass: compute loss
     for t in range(len(inputs)):
-        xs[t] = one_k_representation(k=vocab_size, i=inputs[t])
+        xs[t] = one_hot_vector(k=vocab_size, i=inputs[t])
         hs[t] = np.tanh(np.dot(Wxh, xs[t]) + np.dot(Whh, hs[t - 1]) + bh)  # hidden state
         ys[t] = np.dot(Why, hs[t]) + by  # unnormalized log probabilities for next chars
         ps[t] = np.exp(ys[t]) / np.sum(np.exp(ys[t]))  # probabilities for next chars
@@ -72,14 +72,14 @@ def sample(h, sample_size):
     - n is number of chars to sample
     """
     ix = np.random.randint(vocab_size)  # get random seed char ix
-    x = one_k_representation(k=vocab_size, i=ix)
+    x = one_hot_vector(k=vocab_size, i=ix)
     sample_ixs = []
     for t in range(sample_size):
         h = np.tanh(np.dot(Wxh, x) + np.dot(Whh, h) + bh)
         y = np.dot(Why, h) + by
         p = np.exp(y) / np.sum(np.exp(y))
         ix = np.random.choice(a=vocab_size, p=p.ravel())
-        x = one_k_representation(k=vocab_size, i=ix)
+        x = one_hot_vector(k=vocab_size, i=ix)
         sample_ixs.append(ix)
     return ''.join(ix_to_char[ix] for ix in sample_ixs)
 
