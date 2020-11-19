@@ -1,8 +1,8 @@
+"""
+https://cs231n.github.io/neural-networks-case-study/#grad
+"""
 import numpy as np
-import matplotlib
 import matplotlib.pyplot as plt
-
-matplotlib.use('TkAgg')
 
 N = 100  # number of points per class
 D = 2  # dimensionality
@@ -19,3 +19,11 @@ for j in range(K):
 
 plt.scatter(X[:, 0], X[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
 plt.show()
+
+
+# initialize parameters randomly
+W = 0.01 * np.random.randn(D,K)
+b = np.zeros((1,K))
+
+# compute class scores for a linear classifier
+scores = np.dot(X, W) + b
